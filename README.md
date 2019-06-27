@@ -1,4 +1,4 @@
-# Week 2 - **Google News 📰 🗞️**
+# Week 5 - **Google News 📰 🗞️**
 
 ## Introduction 🌟
 
@@ -19,8 +19,8 @@ Let's build a news 📰 app 📱 using [React Native](https://facebook.github.io
 
 1. Learn how to [fetch()](https://scotch.io/tutorials/how-to-use-the-javascript-fetch-api-to-get-data) data from an API.
     - Recognize the fetch function **takes time**. It'll also require the use of new functions we haven't seen before.
-      - `fetch()` - The **1st** argument is the [api endpoint](https://stackoverflow.com/questions/2122604/what-is-an-endpoint) we're fetching data from, the **2nd** [options](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch#Supplying_request_options)
-      - `json()` - Used to **parse to JS** object.
+    - `fetch()` - The **1st** argument is the [api endpoint](https://stackoverflow.com/questions/2122604/what-is-an-endpoint) we're fetching data from, the **2nd** [options](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch#Supplying_request_options)
+    - `json()` - Used to **parse to JS** object.
 
 2. Learn what `async` & `await` are used for. [Read more detailed async & await](https://alligator.io/js/async-functions/).
     - Recognize they're used to make asynchronous.
@@ -241,6 +241,18 @@ We should now see that the `getNews` logs in the console once, indicating that t
 
 ![name](./assets/fixloop.gif)
 
+**J)** Hide the spinner when the data is fetched by setting our loading state to false.
+
+```jsx
+const getNews = async () => {
+  // ... code ...
+  setLoading(false)
+}
+```
+
+![name](./assets/secondspinner.gif)
+We should now see that the `ActivitySpinner` displays for a few moments while the API request is going on, then hides when complete. This is a visual indicator that we have our data, *excellent*.
+
 ---
 > Key Points 🔑📝
 
@@ -249,34 +261,14 @@ We should now see that the `getNews` logs in the console once, indicating that t
 
 ---
 
-## Review 💻🤓🤔
+### **Milestone 3 🛣🏃 Render news article data to the screen**
 
-- All components require some properties. The properties will be of many different shapes, many different data types 🍚🥦🍗🌶.
+**A)** Stop your packager & simulator and install two new packages using `npm`.
 
-- We can build 🏗👷our own components to take props **easily**. These props will influence our component's behavior. Some of the props we passed were:
-  - `to="vnd"`
-  - `from="usd"`
-  - `toCurrency={toCurrency}`
-  - `fromCurrency={fromCurrency}`
-  - `setConversionCurrencies={setConversionCurrencies}`
-  - `type={fromCurrency}`
-  - `value={currentCurrencyValue}`
-
-- We can add state to our application if we're familiar with `useState`.
-  - `useState` is a function.
-  - The return value is an array
-  - `useState('Hello World')` would result in `'Hello World'` being the default state.
-  - The first index is the state variable.
-  - The second is known as a `setter` function/method.
-- `useEffect()` is used to apply state changes.
-  - In other words, run this code after state has changed.
-
-### Accomplishments 🎯🥇🏆💯
+```jsx
+npm install react-native-elements moment
+```
 
 
-### Rockets 🚀
 
-- [ ] User can convert from USD to EURO.
-- [ ] User can convert from EURO to USD.
-- [ ] User can convert from VND to EURO.
-- [ ] User can convert from EURO to VND.
+
