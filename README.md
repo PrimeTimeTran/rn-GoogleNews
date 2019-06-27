@@ -17,24 +17,25 @@ Let's build a news 📰 app 📱 using [React Native](https://facebook.github.io
 
 ### Learning Objectives ✍️📚📝 ️
 
-1. Learn how to `fetch()` data from an API.
-    - Recognize it **takes time**. These steps will use new JS functions we haven't used before.
-      - `fetch('http://api.myapp.com)` - 1st argument is endpoint.
+1. Learn how to [fetch()](https://scotch.io/tutorials/how-to-use-the-javascript-fetch-api-to-get-data) data from an API.
+    - Recognize the fetch function **takes time**. It'll also require the use of new functions we haven't seen before.
+      - `fetch()` - The **1st** argument is the [api endpoint](https://stackoverflow.com/questions/2122604/what-is-an-endpoint) we're fetching data from, the **2nd** [options](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch#Supplying_request_options)
       - `json()` - Used to **parse to JS** object.
 
-2. Learn what `async` & `await` are used for. [Read detailed](https://alligator.io/js/async-functions/).
+2. Learn what `async` & `await` are used for. [Read more detailed async & await](https://alligator.io/js/async-functions/).
     - Recognize they're used to make asynchronous.
       - `async` - Tells JS that a function is **asynchronous**.
-      - `await` - Tells JS that this line will take a few moments.
+      - `await` - Tells JS that this line will **take a few moments**.
 
 3. Learn what `try` & `catch` are used for.
-    - Recognize they're used to handle failures in API requests.
+    - Recognize they're when we need to be careful because our code may fail.
+    An example is an api request. There are other [use cases](https://www.w3schools.com/java/java_try_catch.asp).
 
 4. Learn what an open source library is and how to use them in our work.
-    - Recognize **[React Native Elements](https://github.com/react-native-training/react-native-elements)** & **[Moment](https://momentjs.com/docs/)** are two of millions of free libraries publically available.
+    - Recognize [React Native Elements](https://github.com/react-native-training/react-native-elements) & [Moment](https://momentjs.com/docs/) are two of millions of free libraries publically available through [npm](https://www.npmjs.com/).
 
 5. Learn how to render `n` items to the screen efficiently.
-    - Recognize this is such a common requirement that React Native provides the component `FlatList` for this usecase.
+    - Recognize this is such a common requirement that React Native provides the component [FlatList](https://facebook.github.io/react-native/docs/flatlist) for this usecase.
 
 > **Tip** 💡: Almost all apps use data fetched from an API. Work slowly through this lab to make sure you understand each step and why they're required.
 
@@ -120,7 +121,7 @@ Create an account [here](https://newsapi.org/s/google-news-api) to get the free 
 
 ```jsx
 const getNews = () => {
-  // ... code ...
+  // ... code soon ...
 }
 ```
 
@@ -133,7 +134,7 @@ const getNews = () => {
 }
 ```
 
-3. Fire the `getNews` function when the component mounts. I advise adding `console.log` to it's body to confirm whether or not it has fired. We also need to call `useEffect()` with the function we want to fire on app load, `getNews`.
+3. Fire the `getNews` function when the component mounts by passing it to `useEffect()`. Add a `console.log` to the body of `getNews` to confirm.
 
 ```jsx
 useEffect(getNews)
@@ -142,7 +143,7 @@ useEffect(getNews)
 ```jsx
 const getNews = () => {
   console.log('getNews function firing')
-  const response = fetch('https://newsapi.org/v2/top-headlines?country=us&apiKey=9eec2f7fe6cd4c40a3fef8f33f5778fa');
+  // ... code ...
 }
 ```
 
@@ -150,7 +151,7 @@ const getNews = () => {
 
 You should now see what you console.logged in your debugging console.
 
-**C)** Checkout the data we got from the `fetch` request by console.logging the `response` you get back from the API.
+**C)** Checkout the data we got from the api request by console.logging the `response`.
 
 ![name](./assets/2c.png)
 
@@ -166,13 +167,13 @@ Because the `fetch` request takes **some amount of time** before it completes, o
 
 ```jsx
 const getNews = async () => {
-  console.log('getNews function firing')
+  // ... code ...
   const response = await fetch('https://newsapi.org/v2/top-headlines?country=us&apiKey=6eec2f7fe6cd4c40a3fef8f33f5778fe');
-  console.log('response', response)
+  
 }
 ```
 
-#### You should now see this complaint despite the fact we got our data.
+#### You should now see complains on the simulator & console
 
 ![name](./assets/2d.png)
 
@@ -180,9 +181,7 @@ const getNews = async () => {
 An Effect function must not return anything besides a function, which is used for clean-up.
 ```
 
-
-
-**E)** Update our `useEffect()` function call to get rid of this warning. [Read more here](https://overreacted.io/a-complete-guide-to-useeffect/) if you want to understand what's going on. Be warned, it's for advanced React developers.
+**E)** Update our `useEffect()` function call to get rid of this warning. If you want to be an advanced React dev one day, read more [here](https://overreacted.io/a-complete-guide-to-useeffect/).
 
 ```jsx
 useEffect(() => {
@@ -196,34 +195,30 @@ Now we'll see that the complaint from React goes away.
 
 We've almost got the data we need. We just need to do one more step.
 
-**F)** Use `json()` to parse the response. Add another `await` because response is a promise which we need to wait on!
+**F)** Use `json()` to parse the **JSON** response to a **JS** object. Add another `await` because response is a Promise and we need to wait for it before calling `json()`
 
 ```jsx
 const getNews = async () => {
-  console.log('getNews function firing')
-  const response = await fetch('https://newsapi.org/v2/top-headlines?country=us&apiKey=6eec2f7fe6cd4c40a3fef8f33f5778fe');
+  // ... code ...
   const jsonData = await response.json()
-  console.log('jsonData', jsonData)
 }
 ```
 
-#### You should now be able expand the `jsonData` object and view it's shape
+### You should now be able **expand** the `jsonData` object and view it's shape
 
 ![name](./assets/data.gif)
 
-**G)** Define a new piece of state, `articles`, to hold the data we get from the API. It's initial state is an empty array because it will eventually hold an array of data and we should make sure the datatype is consistent.
+**G)** Define a new piece of state, `articles`, to hold the data we get from the API. We **choose** to set it's initial state to an empty array because we want to maintain a **consistent datatype**.
 
 ```jsx
 const [articles, setArticles] = useState([])
 ```
 
-**H)** Refactor `getNews` to set the state of articles once the request has succedded.
+**H)** Refactor `getNews` to set the state with the articles we get from the api.
 
 ```jsx
 const getNews = async () => {
-  console.log('getNews')
-  const response = await fetch('https://newsapi.org/v2/top-headlines?country=us&apiKey=6eec2f7fe6cd4c40a3fef8f33f5778fe');
-  const jsonData = await response.json()
+  // ... code ...
   setArticles(jsonData.articles)
 }
 ```
@@ -242,9 +237,17 @@ useEffect(() => {
 }, [])
 ```
 
-We should now see that the `getNews` console.log only fires once, indicating that the function only fired once, excellent!
+We should now see that the `getNews` logs in the console once, indicating that the function only fired once; excellent!
 
 ![name](./assets/fixloop.gif)
+
+---
+> Key Points 🔑📝
+
+- Making a request to an api takes time.
+- Some of the keywords involved are `async`, `await`, `fetch()`, & `json()`.
+
+---
 
 ## Review 💻🤓🤔
 
