@@ -2,7 +2,7 @@
 
 ## Introduction 🌟
 
-Let's build a News app 📱 using [React Native](https://facebook.github.io/react-native/) & [Expo](https://expo.io/).  Our app will help users find information about current world 🌎 events. We'll do so by requesting data from a 3rd party API and then consuming this data in our application.
+Let's build a news 📰 app 📱 using [React Native](https://facebook.github.io/react-native/) & [Expo](https://expo.io/).  Our app will help users find information about current world 🌎 events. We'll do so by requesting data from a 3rd party API and then consuming this data in our application.
 
 ![pwd](./assets/intro.gif)
 
@@ -17,23 +17,26 @@ Let's build a News app 📱 using [React Native](https://facebook.github.io/reac
 
 ### Learning Objectives ✍️📚📝 ️
 
-1. Learn how to `fetch` data from an API. [Detailed explanation](https://www.robinwieruch.de/react-fetching-data/).
-    - Recognize that it requires a few steps. `async`, `await`, `fetch()`, and `json()`.
+1. Learn how to `fetch()` data from an API.
+    - Recognize it **takes time**. These steps will use new JS functions we haven't used before.
+      - `fetch('http://api.myapp.com)` - 1st argument is endpoint.
+      - `json()` - Used to **parse to JS** object.
 
-2. Learn what `async` & `await` are used for.
+2. Learn what `async` & `await` are used for. [Read detailed](https://alligator.io/js/async-functions/).
     - Recognize they're used to make asynchronous.
-      - [Read more about asynchronous functions](https://alligator.io/js/async-functions/).
+      - `async` - Tells JS that a function is **asynchronous**.
+      - `await` - Tells JS that this line will take a few moments.
 
 3. Learn what `try` & `catch` are used for.
     - Recognize they're used to handle failures in API requests.
 
 4. Learn what an open source library is and how to use them in our work.
-    - Recognize **React Native Elements** & **Moment** are two of millions of free libraries publically available.
+    - Recognize **[React Native Elements](https://github.com/react-native-training/react-native-elements)** & **[Moment](https://momentjs.com/docs/)** are two of millions of free libraries publically available.
 
 5. Learn how to render `n` items to the screen efficiently.
     - Recognize this is such a common requirement that React Native provides the component `FlatList` for this usecase.
 
-> **Tip** 💡: Almost all apps use data fetched from an API. Work slowly and think about the implications of each step.
+> **Tip** 💡: Almost all apps use data fetched from an API. Work slowly through this lab to make sure you understand each step and why they're required.
 
 ### **Milestone 1 🛣🏃 Set up initial state of loading**
 
@@ -57,7 +60,7 @@ import {
 } from 'react-native';
 ```
 
-**D)** Define the `loading` variable, `setter` method, and initial value of `loading` in the `App` component's body as `true`.
+**D)** Define the `loading` variable/state, `setter` method, and initial value of `loading` in the `App` component's body as `true`.
 
 ```jsx
 const [loading, setLoading] = useState(true)
@@ -100,7 +103,7 @@ We should now see that there's a spinner when the app loads. Excellent.
 
 ---
 
-### **Milestone 2 🛣🏃 Request data from the API "safely"**
+### **Milestone 2 🛣🏃 Request data from the API**
 Now we need to get the news articles data. We'll do so by using a combination of Javascript's `fetch`, `try`, `catch`, `async`, & `await` functions.
 
 **A)** Get required api key.
@@ -130,7 +133,7 @@ const getNews = () => {
 }
 ```
 
-3. Fire the `getNews` function when the component mounts. I advise adding `console.log` to it's body to confirm our expectations. We need to call `useEffect()` with the function we want to fire on app load, `getNews`.
+3. Fire the `getNews` function when the component mounts. I advise adding `console.log` to it's body to confirm whether or not it has fired. We also need to call `useEffect()` with the function we want to fire on app load, `getNews`.
 
 ```jsx
 useEffect(getNews)
@@ -147,19 +150,19 @@ const getNews = () => {
 
 You should now see what you console.logged in your debugging console.
 
-**B)** Checkout the data we got from the `fetch` request by console.logging the `response` you get back from the API.
+**C)** Checkout the data we got from the `fetch` request by console.logging the `response` you get back from the API.
 
-![name](./assets/2b1.png)
+![name](./assets/2c.png)
 
-You should see something like this in your console. This is called a [promise](https://javascript.info/promise-basics). Promises can become [much more complicated](https://medium.com/javascript-scene/master-the-javascript-interview-what-is-a-promise-27fc71e77261).
+You should see something like this in your console. This is called a [Promise](https://javascript.info/promise-basics). Promises can become [much more complicated](https://medium.com/javascript-scene/master-the-javascript-interview-what-is-a-promise-27fc71e77261).
 
 #### For now, just understand that a promise is data that we will soon have
 
-Because the `fetch` request takes **some amount of time** before it completes, our `getNews` function is classified as an [asynchronous function](https://stackoverflow.com/questions/4559032/easy-to-understand-definition-of-asynchronous-event).
+Because the `fetch` request takes **some amount of time** before it completes, our `getNews` function is constitutes what is known as an [asynchronous function](https://stackoverflow.com/questions/4559032/easy-to-understand-definition-of-asynchronous-event).
 
 `Asynchronous` functions are so common that JS provides us a technique to handle them as if they were synchronous.
 
-**C)** Add `async` & `await` to our function definition to handle this asynchronous function.
+**D)** Add `async` & `await` to our function definition to handle the `Promise`.
 
 ```jsx
 const getNews = async () => {
@@ -169,27 +172,31 @@ const getNews = async () => {
 }
 ```
 
-You should now see this complaint despite the fact we got our data.
+#### You should now see this complaint despite the fact we got our data.
+
+![name](./assets/2d.png)
 
 ```chrome
 An Effect function must not return anything besides a function, which is used for clean-up.
 ```
 
-![name](./assets/2c.png)
 
-**D)** Update our `useEffect()` function call.
+
+**E)** Update our `useEffect()` function call to get rid of this warning. [Read more here](https://overreacted.io/a-complete-guide-to-useeffect/) if you want to understand what's going on. Be warned, it's for advanced React developers.
 
 ```jsx
 useEffect(() => {
   getNews()
-}, [getNews])
+}, [])
 ```
 
-![name](./assets/2d.png)
+![name](./assets/2e.png)
 
-Now we'll see that the complaint from React goes away. This is a advanced concept we'll skip for now but it will probably useful for you to understand it in the future. Read more [here](https://overreacted.io/a-complete-guide-to-useeffect/).
+Now we'll see that the complaint from React goes away.
 
-**E)** Use `json()` to parse the response. Add another `await` because response is a promise which we need to wait on!
+We've almost got the data we need. We just need to do one more step.
+
+**F)** Use `json()` to parse the response. Add another `await` because response is a promise which we need to wait on!
 
 ```jsx
 const getNews = async () => {
@@ -204,13 +211,13 @@ const getNews = async () => {
 
 ![name](./assets/data.gif)
 
-**F)** Define a new piece of state, `articles`, to hold the data we get from the API. It's initial state is an empty array because it will eventually hold an array of data and we should make sure the datatype is consistent.
+**G)** Define a new piece of state, `articles`, to hold the data we get from the API. It's initial state is an empty array because it will eventually hold an array of data and we should make sure the datatype is consistent.
 
 ```jsx
 const [articles, setArticles] = useState([])
 ```
 
-**G)** Refactor `getNews` to set the state of articles once the request has succedded.
+**H)** Refactor `getNews` to set the state of articles once the request has succedded.
 
 ```jsx
 const getNews = async () => {
@@ -227,7 +234,7 @@ You'll now see that now we're causing an [infinite loop](https://en.wikipedia.or
 
 The reason this is occuring is because our hook fires when the component mounts, afterwards it updates state. The result of an update to our component's state is that our hook fires again; thus, the infinite loop.
 
-**G)** Update the `useEffect()` to **not cause** the infinite loop.
+**I)** Update the `useEffect()` to **not cause** the infinite loop.
 
 ```jsx
 useEffect(() => {
