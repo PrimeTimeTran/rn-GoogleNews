@@ -703,10 +703,9 @@ if (hasErrored) {
 const response = await fetch(`https://wrongapi.com`);
 ```
 
-We should see error render to the screen in the event of a failure. In the event of success, the articles should render, *amazing*.
+If we didn't take this last step our app would constantly be loading in the event of a failure. With this `try` & `catch` we should see error render to the screen in the event of a failure. In the event of success, the articles should render, *amazing*.
 
 ![pwd](./assets/5c.gif)
-
 
 > **Key Points** 🔑📝
 
