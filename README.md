@@ -703,9 +703,60 @@ if (hasErrored) {
 const response = await fetch(`https://wrongapi.com`);
 ```
 
-If we didn't take this last step our app would constantly be loading in the event of a failure. With this `try` & `catch` we should see error render to the screen in the event of a failure. In the event of success, the articles should render, *amazing*.
+If we didn't take this step our app would constantly be loading in the event of a failure. With this `try` & `catch` we should see error render to the screen in the event of a failure. In the event of success, the articles should render, *amazing*.
 
 ![pwd](./assets/5c.gif)
+
+If you look closely however, we can seemingly load an infinite number of pages. This is because we haven't checked our response for new articles. In other words, the page number can increase infinitely, despite the fact that the api may not have that many pages.
+
+![pwd](./assets/5cend.gif)
+
+**D)** Handle case where the user has reached the last page.
+
+1. Define a new piece of state, `lastPageReached`, which will initially be false.
+```jsx
+const [lastPageReached, setLastPageReached] = useState(false);
+```
+
+2. Add a conditional to the body of `getNews`. This conditional will set loading to false and return in the event we've reached the last page.
+
+```jsx
+if (lastPageReached) return;
+```
+
+3. Update our useEffect to monitor the articles piece of state only(not loading).
+
+```jsx
+useEffect(() => {
+  getNews();
+}, [articles]);
+```
+
+4. Add a conditional to the body of `getNews` within the `try` which will check for how many articles we got back from the api. In the event we've reached the last page, the length of articles will be 0.
+
+```jsx
+const hasMoreArticles = jsonData.articles.length > 0;
+if (hasMoreArticles) {
+  const newArticleList = filterForUniqueArticles(articles.concat(jsonData.articles));
+  setArticles(newArticleList);
+  setPageNumber(pageNumber + 1);
+} else {
+  setLastPageReached(true);
+}
+```
+
+5. Add a ternary operator to the `ListFooterComponent` prop of our `FlatList`. If there aren't more articles, return a prompt to the user. Otherwise, return the `ActivityIndicator` like before.
+
+```jsx
+ListFooterComponent={lastPageReached ? <Text>No more articles</Text> : <ActivityIndicator
+  size="large"
+  loading={loading}
+/>}
+```
+
+We should now see that when we get to the bottom of the list, we **prompt the user** that there are **no more articles** and stopped making unnecessary api requests, **saving them money** on their data plan, *excellent*.
+
+![pwd](./assets/5d.gif)
 
 > **Key Points** 🔑📝
 

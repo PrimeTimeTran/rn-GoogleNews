@@ -33,10 +33,11 @@ export default function App() {
   const [articles, setArticles] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
   const [hasErrored, setHasApiError] = useState(false);
+  const [lastPageReached, setLastPageReached] = useState(false);
 
   useEffect(() => {
     getNews();
-  }, []);
+  }, [articles]);
 
   const onPress = (url) => {
     Linking.canOpenURL(url).then((supported) => {
@@ -49,15 +50,21 @@ export default function App() {
   };
 
   const getNews = async () => {
+    if (lastPageReached) return;
     setLoading(true);
     try {
       const response = await fetch(`https://newsapi.org/v2/top-headlines?country=us&apiKey=6eec2f7fe6cd4c40a3fef8f33f5778fe&page=${pageNumber}`);
       const jsonData = await response.json();
-      const newArticleList = filterForUniqueArticles(articles.concat(jsonData.articles));
-      setArticles(newArticleList);
-      setPageNumber(pageNumber + 1);
+      const hasMoreArticles = jsonData.articles.length > 0;
+      if (hasMoreArticles) {
+        const newArticleList = filterForUniqueArticles(articles.concat(jsonData.articles));
+        setArticles(newArticleList);
+        setPageNumber(pageNumber + 1);
+      } else {
+        setLastPageReached(true);
+      }
     } catch (error) {
-      setHasApiError(true)
+      setHasApiError(true);
     }
     setLoading(false);
   }
@@ -132,7 +139,7 @@ export default function App() {
         onEndReachedThreshold={1}
         renderItem={renderArticleItem}
         keyExtractor={(item) => item.title}
-        ListFooterComponent={<ActivityIndicator 
+        ListFooterComponent={lastPageReached ? <Text>No more articles</Text> : <ActivityIndicator
           size="large"
           loading={loading}
         />}
