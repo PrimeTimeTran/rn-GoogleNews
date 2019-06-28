@@ -2,7 +2,7 @@
 
 ## Introduction 🌟
 
-Let's build a news 📰 app 📱 using [React Native](https://facebook.github.io/react-native/) & [Expo](https://expo.io/).  Our app will help users find information about current world 🌎 events. We'll do so by requesting data from a 3rd party API and then consuming this data in our application.
+Let's build a news 📰 app 📱 using [React Native](https://facebook.github.io/react-native/) & [Expo](https://expo.io/).  Our app will help users find information about current world 🌎 events. We'll do so by requesting data from a 3rd party API and then consuming this data in our app.
 
 ![pwd](./assets/intro.gif)
 
@@ -14,6 +14,10 @@ Let's build a news 📰 app 📱 using [React Native](https://facebook.github.io
 - [ ] The user can see the total number of articles they've fetched from the API.
 - [ ] When the user scrolls to the end of the list, the app automatically fetches more articles and appends them to the list of current articles(adds).
 - [ ] If the user pushes the "read more" button then the app opens up the article in the phones default browser.
+- [ ] If the api request fails, the app should prompt the user.
+- [ ] If the app is fetching additional articles, the user should be prompted accordingly.
+- [ ] If the api has no more articles to fetch, the app should not make unnecessary api requests.
+- [ ] If the user has fetched all the articles, the user should be prompted accordingly.
 
 ### Learning Objectives ✍️📚📝 ️
 
@@ -770,44 +774,17 @@ We should now see that when we get to the bottom of the list, we **prompt the us
 
 ## Review 💻🤓🤔
 
-- All components require some properties. The properties will be of many different shapes, many different data types 🍚🥦🍗🌶.
-
-- We can build 🏗👷our own components to take props **easily**. These props will influence our component's behavior. Some of the props we passed were:
-  - `to="vnd"`
-  - `from="usd"`
-  - `toCurrency={toCurrency}`
-  - `fromCurrency={fromCurrency}`
-  - `setConversionCurrencies={setConversionCurrencies}`
-  - `type={fromCurrency}`
-  - `value={currentCurrencyValue}`
-
-- We can add state to our application if we're familiar with `useState`.
-  - `useState` is a function.
-  - The return value is an array
-  - `useState('Hello World')` would result in `'Hello World'` being the default state.
-  - The first index is the state variable.
-  - The second is known as a `setter` function/method.
-- `useEffect()` is used to apply state changes.
-  - In other words, run this code after state has changed.
-
 ### Accomplishments 🎯🥇🏆💯
 
-- [X] User sees instructions advising them what to do
-- [X] User can input data to our application, hint, `TextInput`
-- [X] User can see a placeholder text in the input indicating an expected value to be entered by the user
-- [X] User can only enter numbers into the input
-- [X] User can see centered text in the input
-- [X] User can see two buttons indicating
-  - VND to USD
-  - USD to VND
-- [X] User can see a prompt showing the current value they've entered
-- [X] User can see a prompt showing the current value's converted value
-- [ ] User can see both values formatted correctly for the currencies region.
-- [X] User can switch from VND to USD or USD to VND
+- [X] The user can see a list of news articles loaded from an API.
+- [X] For each article the user sees a title, source, link to read more, and hero image.
+- [X] The user can see how long ago the story was published in a human-friendly format; e.g. "15 minutes ago".
+- [X] The user can see the total number of articles they've fetched from the API.
+- [X] When the user scrolls to the end of the list, the app automatically fetches more articles and appends them to the list of current articles(adds).
+- [X] If the user pushes the "read more" button then the app opens up the article in the phones default browser.
+- [X] If the api request fails, the app should prompt the user.
+- [X] If the app is fetching additional articles, the user should be prompted accordingly.
+- [X] If the api has no more articles to fetch, the app should not make unnecessary api requests.
+- [X] If the user has fetched all the articles, the user should be prompted accordingly.
 
 ### Rockets 🚀
-
-- [ ] User can convert from USD to EURO.
-- [ ] User can convert from EURO to USD.
-- [ ] User can convert from VND to EURO.
-- [ ] User can convert from EURO to VND.
