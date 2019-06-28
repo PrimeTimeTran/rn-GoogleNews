@@ -462,7 +462,7 @@ import {
 />
 ```
 
-3. Lastly, we need to define the `renderArticleItem` function with the `Card` we previously had in the body of the `App` component.
+3. Define the `renderArticleItem` function we passed to the `FlatList` component's prop `renderItem`. It should return the `Card` we previously had in the body of the `App` component(the jsx for rendering an article).
 
 ```jsx
 const renderArticleItem = ({ item }) => {
@@ -506,11 +506,11 @@ We should now see that the list of news articles is scrollable and the warning g
 ---
 > Key Points 🔑📝
 
-- [React Native Elements](https://react-native-training.github.io/react-native-elements/docs/getting_started.html) is a library that providez beautifully styled components. We've used `Card`, `Icon`, & `Button`.
+- [React Native Elements](https://react-native-training.github.io/react-native-elements/docs/getting_started.html) is a library that provides beautifully styled components. We've used `Card`, `Icon`, & `Button`.
 - [Moment](https://momentjs.com/docs/) is a library which helps us to parse dates to **human readable** formats. It works for other locales [as well](https://momentjs.com/docs/)!
 - The `data` prop of `FlatList` is the list of items we want rendered.
-- The `keyExtractor` prop of `FlatList` is a function which returns a unique key for each item for performance reasons.
-- The `renderItem` prop of `FlatList` is a function which returns jsx for an individual list item. This function will take an `item` prop which is an individual `article`.
+- The `keyExtractor` prop of `FlatList` requires a function which returns a unique key for each item for performance reasons.
+- The `renderItem` prop of `FlatList` requires a function which returns jsx for an individual list item. This function will take an `item` prop which is an individual `article`.
 
 ---
 
@@ -543,7 +543,7 @@ However, if we scroll to the bottom, we'll see nothing happens(we dont grab addi
 const [pageNumber, setPageNumber] = useState(1);
 ```
 
-**C)** Refactor `getNews` to use this state, as well as update it in our request.
+**C)** Refactor `getNews` to use this state as well as update it after we've made the api request.
 
 ```jsx
 const getNews = async () => {
@@ -568,7 +568,7 @@ const getNews = async () => {
 />
 ```
 
-Now we'll see that when the user scrolls to the bottom of the list, our `FlatList` component knows how to get additional articles, *sexy*.
+Now we'll see that when the user scrolls to the bottom of the list our we **automatically fetch** additional articles. You'll notice the **articles count** increase at the top of the app.
 
 ![pwd](./assets/4d.gif)
 
@@ -606,9 +606,9 @@ const getNews = async () => {
 
 Now we'll see that we've implemented fetching additional articles with **no warnings**, *yay*.
 
-### **Milestone 5 🛣🏃  **
+### **Milestone 5 🛣🏃 Add Polishing touches and safety mechanism**
 
-**A)** Add a spinner to the bottom of the `FlatList` to let the user know we're fetching more `Articles`.
+**A)** Add a spinner to the bottom of the `FlatList` to let the user know we're fetching more `Articles` after they've reached the bottom.
 
 ```jsx
 <FlatList
@@ -647,7 +647,7 @@ const onPress = (url) => {
 };
 ```
 
-3. Pass our custom `onPress` function to the `onPress` prop of `Button`.
+3. Pass our custom `onPress` function to the `onPress` prop of `Button`. This function takes the item's url as an argument.
 
 ```jsx
 <Button
@@ -659,7 +659,7 @@ We should not be able to press/click on the button in order to navigate to the a
 
 ![pwd](./assets/5b.gif)
 
-**C)** Wrap our api request `try` & `catch` to handle errors.
+**C)** Wrap our api request `try` & `catch` to handle potential errors.
 
 1. Define a new piece of state, `hasErrored`, with an initial state of false, because the request hasn't failed yet.
 
@@ -668,8 +668,8 @@ const [hasErrored, setHasApiError] = useState(false);
 ```
 
 2. Wrap our `getNews` functions body with a `try` & `catch`. If the request fails, we call `setHasApiError` with an argument of true.
-```jsx
 
+```jsx
 const getNews = async () => {
   setLoading(true);
   try {
@@ -696,11 +696,68 @@ if (hasErrored) {
   )
 }
 ```
+
 4. Fail the api request on purpose by putting in a random string for the endpoint
-```
+
+```jsx
 const response = await fetch(`https://wrongapi.com`);
 ```
 
-We should see error render to the screen in the event of a failure. In the event of success, the articles should render.
+We should see error render to the screen in the event of a failure. In the event of success, the articles should render, *amazing*.
 
 ![pwd](./assets/5c.gif)
+
+
+> **Key Points** 🔑📝
+
+- Loaders are important for letting the user know we're working to give them amazing content.
+
+- We can open up web pages in our app by using `Linking`.
+
+- When something in our app may fail we should use  `try` & `catch` as a safety mechanism. 
+
+---
+
+## Review 💻🤓🤔
+
+- All components require some properties. The properties will be of many different shapes, many different data types 🍚🥦🍗🌶.
+
+- We can build 🏗👷our own components to take props **easily**. These props will influence our component's behavior. Some of the props we passed were:
+  - `to="vnd"`
+  - `from="usd"`
+  - `toCurrency={toCurrency}`
+  - `fromCurrency={fromCurrency}`
+  - `setConversionCurrencies={setConversionCurrencies}`
+  - `type={fromCurrency}`
+  - `value={currentCurrencyValue}`
+
+- We can add state to our application if we're familiar with `useState`.
+  - `useState` is a function.
+  - The return value is an array
+  - `useState('Hello World')` would result in `'Hello World'` being the default state.
+  - The first index is the state variable.
+  - The second is known as a `setter` function/method.
+- `useEffect()` is used to apply state changes.
+  - In other words, run this code after state has changed.
+
+### Accomplishments 🎯🥇🏆💯
+
+- [X] User sees instructions advising them what to do
+- [X] User can input data to our application, hint, `TextInput`
+- [X] User can see a placeholder text in the input indicating an expected value to be entered by the user
+- [X] User can only enter numbers into the input
+- [X] User can see centered text in the input
+- [X] User can see two buttons indicating
+  - VND to USD
+  - USD to VND
+- [X] User can see a prompt showing the current value they've entered
+- [X] User can see a prompt showing the current value's converted value
+- [ ] User can see both values formatted correctly for the currencies region.
+- [X] User can switch from VND to USD or USD to VND
+
+### Rockets 🚀
+
+- [ ] User can convert from USD to EURO.
+- [ ] User can convert from EURO to USD.
+- [ ] User can convert from VND to EURO.
+- [ ] User can convert from EURO to VND.
