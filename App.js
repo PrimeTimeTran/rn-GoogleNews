@@ -8,12 +8,12 @@ import {
   ActivityIndicator,
 } from 'react-native';
 
-import moment from 'moment';
 import {
   Icon,
   Card,
   Button,
 } from 'react-native-elements';
+import moment from 'moment';
 
 const filterForUniqueArticles = (arr) => {
   const cleaned = [];
@@ -62,12 +62,12 @@ export default function App() {
         setPageNumber(pageNumber + 1);
       } else {
         setLastPageReached(true);
-      }
+      };
     } catch (error) {
       setHasApiError(true);
-    }
+    };
     setLoading(false);
-  }
+  };
 
   const renderArticleItem = ({ item }) => {
     return (
@@ -101,8 +101,8 @@ export default function App() {
           onPress={() => onPress(item.url)}
         />
       </Card>
-    )
-  }
+    );
+  };
 
   if (loading) {
     return (
@@ -112,16 +112,16 @@ export default function App() {
           loading={loading}
         />
       </View>
-    )
-  }
+    );
+  };
 
   if (hasErrored) {
     return (
       <View style={styles.container}>
         <Text>Error =(</Text>
       </View>
-    )
-  }
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -146,7 +146,7 @@ export default function App() {
       />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   containerFlex: {
