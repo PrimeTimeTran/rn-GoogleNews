@@ -440,7 +440,7 @@ However, we also find React complaining. We need to add a `key` prop to the `Car
 
 Additionally, if you were an inquisitive reader and wanted to read more articles, you'd have seen that you cannot scroll down to the other articles you've fetched from the api, *bummer*.
 
-![pwd](./assets/3end.gif)
+![pwd](./assets/3aend.gif)
 
 **H)** Fix the warning and implement scrolling in one go!
 
