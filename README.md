@@ -1,4 +1,4 @@
-# Week 5 - **Google News 📰 🗞️**
+# WK5 - HW - **Google News 📰 🗞️**
 
 ## Introduction 🌟
 
@@ -12,7 +12,7 @@ Let's build a news 📰 app 📱 using [React Native](https://facebook.github.io
 - [ ] For each article the user sees a title, source, link to read more, and hero image.
 - [ ] The user can see how long ago the story was published in a human-friendly format; e.g. "15 minutes ago".
 - [ ] The user can see the total number of articles they've fetched from the API.
-- [ ] When the user scrolls to the end of the list, the app automatically fetches more articles and appends them to the list of current articles(adds).
+- [ ] When the user scrolls to the end of the list, the app automatically fetches more articles and appends them to the list of current articles(adds them to the bottom of our list).
 - [ ] If the user pushes the "read more" button then the app opens up the article in the phones default browser.
 - [ ] If the api request fails, the app should prompt the user.
 - [ ] If the app is fetching additional articles, the user should be prompted accordingly.
@@ -22,7 +22,7 @@ Let's build a news 📰 app 📱 using [React Native](https://facebook.github.io
 ### Learning Objectives ✍️📚📝 ️
 
 1. Learn how to [fetch()](https://scotch.io/tutorials/how-to-use-the-javascript-fetch-api-to-get-data) data from an API.
-    - Recognize the fetch function **takes time**. It'll also require the use of new functions we haven't seen before.
+    - Recognize data fetching **takes time**.
     - `fetch()` - Used to make requests to API.
       - The **1st** argument is the [api endpoint](https://stackoverflow.com/questions/2122604/what-is-an-endpoint) we're fetching data from.
       - The **2nd** is [options](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch#Supplying_request_options).
@@ -100,7 +100,7 @@ if (loading) {
 
 ![pwd](./assets/1f.png)
 
-We should now see that there's a spinner when the app loads. Excellent.
+We should now see that there's a spinner when the app loads *excellent*.
 
 ---
 > Key Points 🔑📝
@@ -111,7 +111,7 @@ We should now see that there's a spinner when the app loads. Excellent.
 ---
 
 ### **Milestone 2 🛣🏃 Request data from the API**
-Now we need to get the news articles data. We'll do so by using a combination of Javascript's `fetch`, `try`, `catch`, `async`, & `await` functions/keywords.
+We **need** to get the news articles **data**. We'll do so by using a combination of Javascript's `fetch`, `try`, `catch`, `async`, & `await` functions/keywords.
 
 **A)** Get required api key.
 
@@ -132,7 +132,7 @@ const getNews = () => {
 ```
 
 2. Use JS's `fetch` method in the body of this function to request data from the appropriate endpoint.
-The argument this function takes is the URL endpoint we want to get data from. You'll also neeed to pass the `apiKey` that you got in the previous step as a parameter in the request url.
+The argument this function takes is the URL endpoint. You'll also neeed to pass the `apiKey` that you got in the previous step as a parameter in the request url; the `&apiKey=6eec2f7fe6cd4c40a3fef8f33f5778fe` at the end.
 
 ```jsx
 const getNews = () => {
@@ -179,7 +179,7 @@ const getNews = async () => {
 }
 ```
 
-#### You should now see complains on the simulator & console
+#### You should now be able to see the response! As well as some complaints...
 
 ![name](./assets/2d.png)
 
@@ -187,7 +187,7 @@ const getNews = async () => {
 An Effect function must not return anything besides a function, which is used for clean-up.
 ```
 
-**E)** Update our `useEffect()` function call to get rid of this warning. If you want to be an advanced React dev one day, read more [here](https://overreacted.io/a-complete-guide-to-useeffect/).
+**E)** Update our `useEffect()` function call to get rid of this warning. If you want to be an advanced React dev one day, read why [here](https://overreacted.io/a-complete-guide-to-useeffect/).
 
 ```jsx
 useEffect(() => {
@@ -197,9 +197,9 @@ useEffect(() => {
 
 ![name](./assets/2e.png)
 
-Now we'll see that the complaint from React goes away.
+Now we'll see that the complaint goes away.
 
-We've almost got the data we need. We just need to do one more step.
+We've almost got the data we need. We just need to complete **one more step**.
 
 **F)** Use `json()` to parse the **JSON** response to a **JS** object. Add another `await` because response is a Promise and we need to wait for it before calling `json()`
 
@@ -210,7 +210,11 @@ const getNews = async () => {
 }
 ```
 
-### You should now be able **expand** the `jsonData` object and view it's shape
+### You should now be able **expand** the `jsonData` object and view it's shape. 
+
+## Questions ⁉️🤔😉 
+1. Do you know what **key** we're **interested in**? 
+2. What's the data inside this key?
 
 ![name](./assets/data.gif)
 
@@ -436,15 +440,15 @@ moment(articles[0].publishedAt).format('LLL')
 })}
 ```
 
+#### We should see multiple articles rendered to the screen now
+
 ![pwd](./assets/3g.png)
 
-And now, we should see there are multiple articles rendered to the screen.
+However, we also find **React complaining**. We need to add a `key` prop to the `Card` component because it's being rendered in a list. This is for [performance reasons](https://reactjs.org/docs/lists-and-keys.html).
 
-However, we also find React complaining. We need to add a `key` prop to the `Card` component because it's being rendered in a list. This is for [performance reasons](https://reactjs.org/docs/lists-and-keys.html).
+More importantly, we **cannot scroll down** to view other articles we've fetched from the api.
 
-Additionally, if you were an inquisitive reader and wanted to read more articles, you'd have seen that you cannot scroll down to the other articles you've fetched from the api, *bummer*.
-
-![pwd](./assets/3aend.gif)
+![pwd](./assets/4end.gif)
 
 **H)** Fix the warning and implement scrolling in one go!
 
@@ -539,7 +543,7 @@ We should now see a **articles count** at the top.
 
 However, if we scroll to the bottom, we'll see nothing happens(we dont grab additional articles from our api).
 
-![pwd](./assets/3aend.gif)
+![pwd](./assets/4aend.gif)
 
 **B)** Define a new piece of state `pageNumber`.
 
@@ -665,13 +669,13 @@ We should not be able to press/click on the button in order to navigate to the a
 
 **C)** Wrap our api request `try` & `catch` to handle potential errors.
 
-1. Define a new piece of state, `hasErrored`, with an initial state of false, because the request hasn't failed yet.
+1. Define a new piece of state, `hasErrored`, with an initial state of `false` because when the app loads, the app hasn't made a request that has failed yet.
 
 ```jsx
 const [hasErrored, setHasApiError] = useState(false);
 ```
 
-2. Wrap our `getNews` functions body with a `try` & `catch`. If the request fails, we call `setHasApiError` with an argument of true.
+2. Wrap our `getNews` functions body with a `try` & `catch`. If the request fails, we call `setHasApiError` with an argument of `true`.
 
 ```jsx
 const getNews = async () => {
@@ -701,28 +705,28 @@ if (hasErrored) {
 }
 ```
 
-4. Fail the api request on purpose by putting in a random string for the endpoint
+4. Deliberately fail the api by passing it a **nonsense endpoint** to test behavior.
 
 ```jsx
 const response = await fetch(`https://wrongapi.com`);
 ```
 
-If we didn't take this step our app would constantly be loading in the event of a failure. With this `try` & `catch` we should see error render to the screen in the event of a failure. In the event of success, the articles should render, *amazing*.
+We want to hide the spinner and notify the user if the request fails. The `try` & `catch` is useful for many other situations as well. In the event of a request failure, the user sees a prompt, in the event of success, the content; *amazing*.
 
 ![pwd](./assets/5c.gif)
 
-If you look closely however, we can seemingly load an infinite number of pages. This is because we haven't checked our response for new articles. In other words, the page number can increase infinitely, despite the fact that the api may not have that many pages.
+If you look closely however, we can seemingly load an infinite number of pages. This is because we haven't checked our response for new articles. In other words, we allow the user to request pages infinitely, despite the fact that the api may not have that many pages.
 
 ![pwd](./assets/5cend.gif)
 
 **D)** Handle case where the user has reached the last page.
 
-1. Define a new piece of state, `lastPageReached`, which will initially be false.
+1. Define a new piece of state, `lastPageReached`, which will initially be `false`.
 ```jsx
 const [lastPageReached, setLastPageReached] = useState(false);
 ```
 
-2. Add a conditional to the body of `getNews`. This conditional will set loading to false and return in the event we've reached the last page.
+2. Add a conditional to the body of `getNews`. This conditional will set loading to `false` and return in the event we've reached the last page.
 
 ```jsx
 if (lastPageReached) return;
@@ -764,23 +768,31 @@ We should now see that when we get to the bottom of the list, we **prompt the us
 
 > **Key Points** 🔑📝
 
-- Loaders are important for letting the user know we're working to give them amazing content.
+- A lot of the work we do when we build apps is related to giving the user feedback.
 
 - We can open up web pages in our app by using `Linking`.
 
-- When something in our app may fail we should use  `try` & `catch` as a safety mechanism. 
+- When something in our app may fail we should use  `try` & `catch` as a safety mechanism.
 
 ---
 
 ## Review 💻🤓🤔
 
-### Accomplishments 🎯🥇🏆💯
+- Most apps requirie data of some form.
+- API's can be called to fetch dynamic data.
+- API requests are asynchronous.
+- APIs are unique and we need to study their documentation in order to use them correctly.
+- There are many public APIs [available](https://github.com/public-apis/public-apis).
+- `FlatList` is a React Native component used to render `lists` of items in a performant way.
+- There are many public libraries availaboe for specific use cases.
+
+### Accomplishments 🥇🏆💯
 
 - [X] The user can see a list of news articles loaded from an API.
 - [X] For each article the user sees a title, source, link to read more, and hero image.
 - [X] The user can see how long ago the story was published in a human-friendly format; e.g. "15 minutes ago".
 - [X] The user can see the total number of articles they've fetched from the API.
-- [X] When the user scrolls to the end of the list, the app automatically fetches more articles and appends them to the list of current articles(adds).
+- [X] When the user scrolls to the end of the list, the app automatically fetches more articles and appends them to the list of current articles(adds them to the bottom of our list).
 - [X] If the user pushes the "read more" button then the app opens up the article in the phones default browser.
 - [X] If the api request fails, the app should prompt the user.
 - [X] If the app is fetching additional articles, the user should be prompted accordingly.
