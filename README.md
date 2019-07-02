@@ -4,7 +4,7 @@
 
 Let's build a news 📰 app 📱 using [React Native](https://facebook.github.io/react-native/) & [Expo](https://expo.io/).  Our app will help users find information about current world 🌎 events. We'll do so by requesting data from a 3rd party API and then consuming this data in our app.
 
-![pwd](./assets/intro.gif)
+![pwd](./assets/intro1.gif)
 
 ### Features 🎯🥇🏆
 
