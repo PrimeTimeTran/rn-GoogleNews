@@ -37,7 +37,7 @@ export default function App() {
 
   useEffect(() => {
     getNews();
-  }, [articles]);
+  }, []);
 
   const onPress = (url) => {
     Linking.canOpenURL(url).then((supported) => {
@@ -136,7 +136,7 @@ export default function App() {
       <FlatList
         data={articles}
         onEndReached={getNews}
-        onEndReachedThreshold={1}
+        onEndReachedThreshold={2}
         renderItem={renderArticleItem}
         keyExtractor={(item) => item.title}
         ListFooterComponent={lastPageReached ? <Text>No more articles</Text> : <ActivityIndicator
